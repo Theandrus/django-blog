@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} {{article.article_title}} {% endblock %}
+
+{% block content %}
+
+    {% if latest_articles %}
+
+        {% for latest_article in latest_articles %}
+            <div class="articles">
+                <a href="{% url 'articles:detail' latest_article.id %}">{{latest_article.article_title}}</a>
+                 {% if user.is_authenticated %}
+                  <form action="{% url 'articles:post_like' latest_article.id %}" method="POST">
+                    {% csrf_token %}
+
+                    {% if post_is_liked %}
+                    <button type="submit" name="blogpost_id" value="{{article.id}}" class="btn btn-info">Unlike</button>
+                    {% else %}
+                    <button type="submit" name="blogpost_id" value="{{article.id}}" class="btn btn-info">Like</button>
+                    {% endif %}
+                  </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+<!--            <form action="" method="get" class="form-example">-->
+                <a href="{% url 'articles:create_post' %}" >
+                    <button type="submit" name="create_post" class="create_post">Create a post</button>
+                </a>
+<!--            </form>-->
+    {% else %}
+        <a>The articles were not find(</a>
+    {% endif %}
+
+{% endblock %}

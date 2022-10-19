@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} Create a post {% endblock %}
+
+{% block content %}
+
+<h2>Add a new post</h2>
+
+<form action="{% url 'articles:post_add' %}" method="post">
+    {% csrf_token %}
+    <div class="area">
+        <textarea name="title"  required="" placeholder="Article's title" cols="10" rows="10"></textarea>
+        <textarea name="text" required="" placeholder="Article's text" cols="30" rows="10"></textarea>
+    </div>
+    <button type="submit" class="add_post">Add post</button>
+
+</form>
+
+
+{% endblock %}
