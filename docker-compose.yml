@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8001
+    volumes:
+      - .:/myfirst
+    ports:
+      - '8000:8000'
+    networks:
+      - app
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: mysql:8.0.29
+    ports:
+      - '3308:3306'
+    environment:
+      MYSQL_DATABASE: 'post_blog'
+      MYSQL_ROOT: 'root'
+      MYSQL_ROOT_PASSWORD: 'SQListhebest'
+    restart: always
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
